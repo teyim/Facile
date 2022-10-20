@@ -1,8 +1,9 @@
+/* eslint-disable prettier/prettier */
 module.exports = {
     root: true,
     parserOptions: {
         ecmaVersion: 2020,
-        sourceType: "module",
+        sourceType: 'module',
         ecmaFeatures: {
             jsx: true,
         },
@@ -16,51 +17,46 @@ module.exports = {
 
     settings: {
         react: {
-            version: "detect",
+            version: 'detect',
         },
-        "import/resolver": {
+        'import/resolver': {
             node: {
-                extensions: [".ts", ".tsx"],
+                extensions: ['.ts', '.tsx'],
             },
         },
     },
 
-    plugins: ["@typescript-eslint"],
+    plugins: ['@typescript-eslint'],
     extends: [
-        "next/core-web-vitals",
-        "plugin:@typescript-eslint/recommended",
-        "prettier",
-        "plugin:prettier/recommended",
+        'next/core-web-vitals',
+        'plugin:@typescript-eslint/recommended',
+        'prettier',
+        'plugin:prettier/recommended',
     ],
 
     rules: {
-        "@typescript-eslint/no-unused-vars": "error",
-        "@typescript-eslint/no-explicit-any": "error",
-        "react/react-in-jsx-scope": "off",
-        "prettier/prettier": [
-            "error",
-            {
-                endOfLine: "auto",
-            },
-        ],
-        "react/jsx-filename-extension": [
+        '@typescript-eslint/no-unused-vars': 'error',
+        '@typescript-eslint/no-explicit-any': 'error',
+        'react/react-in-jsx-scope': 'off',
+        'prettier/prettier': 0,
+        'react/jsx-filename-extension': [
             1,
             {
-                extensions: [".ts", ".tsx", ".js", ".jsx"],
+                extensions: ['.ts', '.tsx', '.js', '.jsx'],
             },
         ],
-        "react/jsx-props-no-spreading": "off",
-        "import/extensions": [
-            "error",
-            "ignorePackages",
+        'react/jsx-props-no-spreading': 'off',
+        'import/extensions': [
+            'error',
+            'ignorePackages',
             {
-                js: "never",
-                jsx: "never",
-                ts: "never",
-                tsx: "never",
+                js: 'never',
+                jsx: 'never',
+                ts: 'never',
+                tsx: 'never',
             },
         ],
-        "no-nested-ternary": "off",
-        "import/prefer-default-export": "off",
+        'no-nested-ternary': 'off',
+        'import/prefer-default-export': 'off',
     },
 };
