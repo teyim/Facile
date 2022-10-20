@@ -1,603 +1,249 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable prettier/prettier */
-
 // /pages/api/og.tsx
 
 import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
 
+
 export const config = {
   runtime: 'experimental-edge',
 };
 
-export default function handler(req: NextRequest) {
+
+const levels = [
+  {
+    image: 'https://i.postimg.cc/QKLZVKtw/1.png',
+    name: 'R2D2',
+    value: 1,
+  },
+  {
+    image: 'https://i.postimg.cc/Z0gCFwBz/2.png',
+    name: 'HAL 9000',
+    value: 2,
+  },
+  {
+    image: 'https://i.postimg.cc/N5mf8BvR/3.png',
+    name: 'DANTE II',
+    value: 3,
+  },
+  {
+    image: 'https://i.postimg.cc/grf26rQY/4.png',
+    name: 'ASIMO',
+    value: 4,
+  },
+  {
+    image: 'https://i.postimg.cc/V5SN6X7G/5.png',
+    name: 'K9',
+    value: 5,
+  },
+  {
+    image: 'https://i.postimg.cc/7f2bBS0G/6.png',
+    name: 'MACHINA',
+    value: 6,
+  },
+  {
+    image: 'https://i.postimg.cc/87dcGDyT/7.png',
+    name: 'Eve the Angel',
+    value: 7,
+  },
+  {
+    image: 'https://i.postimg.cc/VSY6LTTn/8.png',
+    name: 'EVA',
+    value: 8,
+  },
+  {
+    image: 'https://i.postimg.cc/62qpCZBQ/9.png',
+    name: 'TREK',
+    value: 9,
+  },
+  {
+    image: 'https://i.postimg.cc/yDCx2Wyf/10.png',
+    name: 'SILVER HEAD',
+    value: 10,
+  },
+  {
+    image: 'https://i.postimg.cc/94Jf4b5S/11.png',
+    name: 'OLYMPUS',
+    value: 11,
+  },
+  {
+    image: 'https://i.postimg.cc/k6HXs55v/12.png',
+    name: 'HUMANIOD',
+    value: 12,
+  },
+];
+
+
+export default async function handler(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
+    let levelParam = 0
+    let health = 0
 
-    // ?title=<title>
-    const hasTitle = searchParams.has('title');
-    const title = hasTitle
-      ? searchParams.get('title')?.slice(0, 100)
-      : 'My default title';
+    const hasLevel = searchParams.has('level');
+    const levelSearchParam = hasLevel ? searchParams.get('level')?.slice(0, 2) : 1;
+    const hasCommits = searchParams.has('commits');
+    const commits = hasCommits ? searchParams.get('commits')?.slice(0, 2) : 0;
+    const hasHealth = searchParams.has('health');
+    const healthParam = hasHealth ? searchParams.get('health')?.slice(0, 2) : 0;
+
+    if (levelSearchParam && healthParam) {
+      levelParam = +levelSearchParam;
+      health = +healthParam;
+    }
 
     return new ImageResponse(
       (
-        <div tw="flex w-[100%] h-[100%]">
-          <div tw=" flex w-full h-full border-2 border-gray-600 rounded-lg shadow-sm bg-[#121315] p-3">
-            <div tw="flex flex-col w-[70%] px-3">
-              <h1 tw="text-gray-200  text-lg" style={{ fontWeight: 'bold' }}>
-                WALLE- 1
-              </h1>
-              <h1 tw="text-gray-400 font-light text-left mt-1">
-                In order to be irreplaceable, one must always be different
-              </h1>
-              <div tw="flex w-full bg-red-100 rounded-full h-3 dark:bg-gray-700 my-4  ">
-                <div tw="p-0 bg-red-500 h-3 rounded-full dark:bg-gray-300 w-[10%]"></div>
-              </div>
+        <div tw="flex  w-full h-full bg-[#1F2937] py-3 flex-col border-4 border-[#475569]">
+          <div
+            tw="flex"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {levels.map((level) => {
+              if (level.value === levelParam) {
+                return (
+                  <div
+                    tw="flex border border-4 border-[#10B981] p-3 rounded-full mx-auto mx-3"
+                    key={level.name}
+                  >
+                    <img
+                      width="50"
+                      height="50"
+                      src={level.image}
+                      tw=""
+                      alt="robot image"
+                    />
+                  </div>
+                );
+              }
+              if (level.value > levelParam && level.value - levelParam <= 2) {
+                return (
+                  <div
+                    tw="flex border border-2 border-[#475569] p-3 rounded-full mx-1"
+                    key={level.name}
+                  >
+                    <img
+                      width="40"
+                      height="40"
+                      src={level.image}
+                      tw="opacity-30"
+                      alt="robot image"
+                    />
+                  </div>
+                );
+              }
+              if (level.value > levelParam && levelParam < 3) {
+                return (
+                  <div
+                    tw="flex border border-2 border-[#475569] p-3 rounded-full mx-1"
+                    key={level.name}
+                  >
+                    <img
+                      width="40"
+                      height="40"
+                      src={level.image}
+                      tw="opacity-30"
+                      alt="robot image"
+                    />
+                  </div>
+                );
+              }
+              if (levelParam >= 3 && levelParam - level.value <= 2) {
+                return (
+                  <div
+                    tw="flex border border-2 border-[#CA8A04] p-3 rounded-full mx-1"
+                    key={level.name}
+                  >
+                    <img
+                      width="40"
+                      height="40"
+                      src={level.image}
+                      tw=""
+                      alt="robot image"
+                    />
+                  </div>
+                );
+              }
+            })}
+            {/* <div tw="flex border border-2 border-[#CA8A04] p-3 rounded-full mx-1">
+              <img
+                width="40"
+                height="40"
+                src="https://i.postimg.cc/rRT0NNGR/1.png"
+                tw=""
+                alt="robot image"
+              />
             </div>
-            <div tw="flex border-2 border-gray-600 rounded-full mx-auto mt-6 p-3 bg-gray-800">
-              <svg
+            <div tw="flex border border-2 border-[#CA8A04] p-3 rounded-full mx-1">
+              <img
+                width="40"
+                height="40"
+                src="https://i.postimg.cc/Z0gCFwBz/2.png"
+                tw=""
+                alt="robot image"
+              />
+            </div>
+            <div tw="flex border border-4 border-[#10B981] p-3 rounded-full mx-auto mx-3">
+              <img
                 width="50"
                 height="50"
-                viewBox="0 0 340 340"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g clip-path="url(#clip0_1_2257)">
-                  <g filter="url(#filter0_ii_1_2257)">
-                    <path
-                      d="M8 130C8 116.745 18.7452 106 32 106H224C237.255 106 248 116.745 248 130V290C248 303.255 237.255 314 224 314H32C18.7452 314 8 303.255 8 290V130Z"
-                      fill="#8A7DD8"
-                    />
-                  </g>
-                  <path
-                    d="M8 130C8 116.745 18.7452 106 32 106H224C237.255 106 248 116.745 248 130V290C248 303.255 237.255 314 224 314H32C18.7452 314 8 303.255 8 290V130Z"
-                    stroke="#1F2024"
-                    stroke-width="8"
-                  />
-                  <g filter="url(#filter1_i_1_2257)">
-                    <path
-                      d="M108 130C108 116.745 118.745 106 132 106H308C321.255 106 332 116.745 332 130V290C332 303.255 321.255 314 308 314H132C118.745 314 108 303.255 108 290V130Z"
-                      fill="#AEA5EE"
-                    />
-                  </g>
-                  <path
-                    d="M108 130C108 116.745 118.745 106 132 106H308C321.255 106 332 116.745 332 130V290C332 303.255 321.255 314 308 314H132C118.745 314 108 303.255 108 290V130Z"
-                    stroke="#1F2024"
-                    stroke-width="8"
-                  />
-                  <path
-                    d="M236 110H274L218 310H180L236 110Z"
-                    fill="white"
-                    fill-opacity="0.5"
-                  />
-                  <path
-                    d="M221 110H227L171 310H165L221 110Z"
-                    fill="white"
-                    fill-opacity="0.5"
-                  />
-                  <g filter="url(#filter2_ddi_1_2257)">
-                    <rect
-                      x="136"
-                      y="156"
-                      width="168"
-                      height="64"
-                      rx="16"
-                      fill="#1F2024"
-                    />
-                    <circle cx="176" cy="188" r="16" fill="white" />
-                    <circle cx="264" cy="188" r="16" fill="white" />
-                  </g>
-                  <circle
-                    cx="50"
-                    cy="224"
-                    r="36"
-                    fill="#1F2024"
-                    fill-opacity="0.16"
-                  />
-                  <g filter="url(#filter3_i_1_2257)">
-                    <circle cx="49" cy="213" r="36" fill="#AEA5EE" />
-                  </g>
-                  <circle
-                    cx="49"
-                    cy="213"
-                    r="36"
-                    stroke="#1F2024"
-                    stroke-width="8"
-                  />
-                  <path
-                    d="M59 189C62.6403 190.938 65.7524 194.074 68 198"
-                    stroke="white"
-                    stroke-width="8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <g filter="url(#filter4_i_1_2257)">
-                    <circle cx="29" cy="213" r="24" fill="#CAE9FA" />
-                  </g>
-                  <circle
-                    cx="29"
-                    cy="213"
-                    r="24"
-                    stroke="#1F2024"
-                    stroke-width="8"
-                  />
-                  <g filter="url(#filter5_ddi_1_2257)">
-                    <g clip-path="url(#clip1_1_2257)">
-                      <rect
-                        x="164"
-                        y="232"
-                        width="112"
-                        height="32"
-                        rx="16"
-                        fill="#1F2024"
-                      />
-                      <rect
-                        x="164"
-                        y="232"
-                        width="12"
-                        height="32"
-                        fill="#CAE9FA"
-                      />
-                      <rect
-                        x="184"
-                        y="232"
-                        width="12"
-                        height="32"
-                        fill="#CAE9FA"
-                      />
-                      <rect
-                        x="204"
-                        y="232"
-                        width="12"
-                        height="32"
-                        fill="#CAE9FA"
-                      />
-                      <rect
-                        x="224"
-                        y="232"
-                        width="12"
-                        height="32"
-                        fill="#CAE9FA"
-                      />
-                      <rect
-                        x="244"
-                        y="232"
-                        width="12"
-                        height="32"
-                        fill="#CAE9FA"
-                      />
-                      <rect
-                        x="264"
-                        y="232"
-                        width="12"
-                        height="32"
-                        fill="#CAE9FA"
-                      />
-                    </g>
-                    <rect
-                      x="164"
-                      y="232"
-                      width="112"
-                      height="32"
-                      rx="16"
-                      stroke="#1F2024"
-                      stroke-width="6"
-                    />
-                  </g>
-                  <rect
-                    x="169"
-                    y="57"
-                    width="2"
-                    height="37"
-                    fill="#AEA5EE"
-                    stroke="#1F2024"
-                    stroke-width="8"
-                  />
-                  <circle cx="170" cy="56" r="12" fill="white" />
-                  <path
-                    d="M126 66C126 41.6995 145.699 22 170 22C194.301 22 214 41.6995 214 66V94H126V66Z"
-                    fill="white"
-                    fill-opacity="0.5"
-                    stroke="#1F2024"
-                    stroke-width="8"
-                  />
-                  <g filter="url(#filter6_i_1_2257)">
-                    <path
-                      d="M114 102C114 97.5817 117.582 94 122 94H218C222.418 94 226 97.5817 226 102V106H114V102Z"
-                      fill="#AEA5EE"
-                    />
-                  </g>
-                  <path
-                    d="M114 102C114 97.5817 117.582 94 122 94H218C222.418 94 226 97.5817 226 102V106H114V102Z"
-                    stroke="#1F2024"
-                    stroke-width="8"
-                  />
-                </g>
-                <defs>
-                  <filter
-                    id="filter0_ii_1_2257"
-                    x="4"
-                    y="102"
-                    width="248"
-                    height="216"
-                    filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB"
-                  >
-                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="BackgroundImageFix"
-                      result="shape"
-                    />
-                    <feColorMatrix
-                      in="SourceAlpha"
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      result="hardAlpha"
-                    />
-                    <feOffset dy="-16" />
-                    <feComposite
-                      in2="hardAlpha"
-                      operator="arithmetic"
-                      k2="-1"
-                      k3="1"
-                    />
-                    <feColorMatrix
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in2="shape"
-                      result="effect1_innerShadow_1_2257"
-                    />
-                    <feColorMatrix
-                      in="SourceAlpha"
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      result="hardAlpha"
-                    />
-                    <feOffset dy="16" />
-                    <feComposite
-                      in2="hardAlpha"
-                      operator="arithmetic"
-                      k2="-1"
-                      k3="1"
-                    />
-                    <feColorMatrix
-                      type="matrix"
-                      values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in2="effect1_innerShadow_1_2257"
-                      result="effect2_innerShadow_1_2257"
-                    />
-                  </filter>
-                  <filter
-                    id="filter1_i_1_2257"
-                    x="104"
-                    y="102"
-                    width="232"
-                    height="216"
-                    filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB"
-                  >
-                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="BackgroundImageFix"
-                      result="shape"
-                    />
-                    <feColorMatrix
-                      in="SourceAlpha"
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      result="hardAlpha"
-                    />
-                    <feOffset dx="-24" dy="8" />
-                    <feComposite
-                      in2="hardAlpha"
-                      operator="arithmetic"
-                      k2="-1"
-                      k3="1"
-                    />
-                    <feColorMatrix
-                      type="matrix"
-                      values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in2="shape"
-                      result="effect1_innerShadow_1_2257"
-                    />
-                  </filter>
-                  <filter
-                    id="filter2_ddi_1_2257"
-                    x="132"
-                    y="156"
-                    width="176"
-                    height="64"
-                    filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB"
-                  >
-                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                    <feColorMatrix
-                      in="SourceAlpha"
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      result="hardAlpha"
-                    />
-                    <feOffset dx="-4" />
-                    <feColorMatrix
-                      type="matrix"
-                      values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in2="BackgroundImageFix"
-                      result="effect1_dropShadow_1_2257"
-                    />
-                    <feColorMatrix
-                      in="SourceAlpha"
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      result="hardAlpha"
-                    />
-                    <feOffset dx="4" />
-                    <feColorMatrix
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in2="effect1_dropShadow_1_2257"
-                      result="effect2_dropShadow_1_2257"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="effect2_dropShadow_1_2257"
-                      result="shape"
-                    />
-                    <feColorMatrix
-                      in="SourceAlpha"
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      result="hardAlpha"
-                    />
-                    <feOffset dx="-4" />
-                    <feComposite
-                      in2="hardAlpha"
-                      operator="arithmetic"
-                      k2="-1"
-                      k3="1"
-                    />
-                    <feColorMatrix
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in2="shape"
-                      result="effect3_innerShadow_1_2257"
-                    />
-                  </filter>
-                  <filter
-                    id="filter3_i_1_2257"
-                    x="9"
-                    y="173"
-                    width="80"
-                    height="80"
-                    filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB"
-                  >
-                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="BackgroundImageFix"
-                      result="shape"
-                    />
-                    <feColorMatrix
-                      in="SourceAlpha"
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      result="hardAlpha"
-                    />
-                    <feOffset dx="12" dy="-8" />
-                    <feComposite
-                      in2="hardAlpha"
-                      operator="arithmetic"
-                      k2="-1"
-                      k3="1"
-                    />
-                    <feColorMatrix
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in2="shape"
-                      result="effect1_innerShadow_1_2257"
-                    />
-                  </filter>
-                  <filter
-                    id="filter4_i_1_2257"
-                    x="1"
-                    y="185"
-                    width="56"
-                    height="56"
-                    filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB"
-                  >
-                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="BackgroundImageFix"
-                      result="shape"
-                    />
-                    <feColorMatrix
-                      in="SourceAlpha"
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      result="hardAlpha"
-                    />
-                    <feOffset dx="12" dy="-8" />
-                    <feComposite
-                      in2="hardAlpha"
-                      operator="arithmetic"
-                      k2="-1"
-                      k3="1"
-                    />
-                    <feColorMatrix
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in2="shape"
-                      result="effect1_innerShadow_1_2257"
-                    />
-                  </filter>
-                  <filter
-                    id="filter5_ddi_1_2257"
-                    x="157"
-                    y="229"
-                    width="126"
-                    height="38"
-                    filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB"
-                  >
-                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                    <feColorMatrix
-                      in="SourceAlpha"
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      result="hardAlpha"
-                    />
-                    <feOffset dx="-4" />
-                    <feColorMatrix
-                      type="matrix"
-                      values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in2="BackgroundImageFix"
-                      result="effect1_dropShadow_1_2257"
-                    />
-                    <feColorMatrix
-                      in="SourceAlpha"
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      result="hardAlpha"
-                    />
-                    <feOffset dx="4" />
-                    <feColorMatrix
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in2="effect1_dropShadow_1_2257"
-                      result="effect2_dropShadow_1_2257"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="effect2_dropShadow_1_2257"
-                      result="shape"
-                    />
-                    <feColorMatrix
-                      in="SourceAlpha"
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      result="hardAlpha"
-                    />
-                    <feOffset dx="-4" />
-                    <feComposite
-                      in2="hardAlpha"
-                      operator="arithmetic"
-                      k2="-1"
-                      k3="1"
-                    />
-                    <feColorMatrix
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in2="shape"
-                      result="effect3_innerShadow_1_2257"
-                    />
-                  </filter>
-                  <filter
-                    id="filter6_i_1_2257"
-                    x="110"
-                    y="90"
-                    width="120"
-                    height="20"
-                    filterUnits="userSpaceOnUse"
-                    color-interpolation-filters="sRGB"
-                  >
-                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="BackgroundImageFix"
-                      result="shape"
-                    />
-                    <feColorMatrix
-                      in="SourceAlpha"
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      result="hardAlpha"
-                    />
-                    <feOffset dx="-24" dy="8" />
-                    <feComposite
-                      in2="hardAlpha"
-                      operator="arithmetic"
-                      k2="-1"
-                      k3="1"
-                    />
-                    <feColorMatrix
-                      type="matrix"
-                      values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"
-                    />
-                    <feBlend
-                      mode="normal"
-                      in2="shape"
-                      result="effect1_innerShadow_1_2257"
-                    />
-                  </filter>
-                  <clipPath id="clip0_1_2257">
-                    <rect width="340" height="340" fill="white" />
-                  </clipPath>
-                  <clipPath id="clip1_1_2257">
-                    <rect
-                      x="164"
-                      y="232"
-                      width="112"
-                      height="32"
-                      rx="16"
-                      fill="white"
-                    />
-                  </clipPath>
-                </defs>
-              </svg>
+                src="https://i.postimg.cc/N5mf8BvR/3.png"
+                tw=""
+                alt="robot image"
+              />
             </div>
+            <div tw="flex border border-2 border-[#475569] p-3 rounded-full mx-1">
+              <img
+                width="40"
+                height="40"
+                src="https://i.postimg.cc/grf26rQY/4.png"
+                tw="opacity-30"
+                alt="robot image"
+              />
+            </div>
+            <div tw="flex border border-2 border-[#475569] p-3 rounded-full mx-1">
+              <img
+                width="40"
+                height="40"
+                src="https://i.postimg.cc/V5SN6X7G/5.png"
+                tw="opacity-30"
+                alt="robot image"
+              />
+            </div>*/}
+          </div>
+          <div tw="flex flex-col text-[#94A3B8] font-bold w-full ">
+            <h1 tw="flex mx-auto font-bold text-xl mb-1">
+              {levels[levelParam - 1].name}
+            </h1>
+            <h1 tw="flex mx-auto text-md font-light mt-0">
+              You made <span tw="mx-1 text-[#EAB308]">{commits}</span> commits
+              in the last 24 hrs
+            </h1>
+            <h1 tw="flex mx-auto font-semibold text-md mt-0 text-[#94A3B8]">
+              LEVEL {levelParam}
+            </h1>
+
+            <h1
+              tw={`flex mx-auto font-semibold text-md mt-0 ${
+                health < 50 && 'text-[#EF4444]'
+              } ${health === 50 && 'text-[#EAB308]'} ${
+                health > 50 && 'text-[#22C55E]'
+              }`}
+            >
+              {health}%
+            </h1>
           </div>
         </div>
       ),
       {
-        width: 350,
-        height: 200,
+        width: 400,
+        height: 240,
       }
     );
   } catch (e: any) {
