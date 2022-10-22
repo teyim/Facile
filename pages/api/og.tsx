@@ -97,10 +97,14 @@ export default async function handler(req: NextRequest) {
     return new ImageResponse(
       (
         <div
-          tw="flex bg-[#1F2937] py-3 flex-col border-4 border-[#475569]"
+          tw="flex bg-[#1F2937] py-4 flex-col border-4 border-[#475569]"
           style={{
+            display: 'flex',
             height: '100%',
             width: '100%',
+            justifyContent: 'center',
+            fontFamily: 'Inter, "Material Icons"',
+            textAlign: 'center',
           }}
         >
           <div
