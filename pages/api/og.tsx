@@ -96,7 +96,13 @@ export default async function handler(req: NextRequest) {
 
     return new ImageResponse(
       (
-        <div tw="flex w-full h-full bg-[#1F2937] py-3 flex-col border-4 border-[#475569]">
+        <div
+          tw="flex bg-[#1F2937] py-3 flex-col border-4 border-[#475569]"
+          style={{
+            height: '100%',
+            width: '100%',
+          }}
+        >
           <div
             tw="flex"
             style={{
