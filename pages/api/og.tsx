@@ -233,7 +233,7 @@ export default async function handler(req: NextRequest) {
             </h1>
             <h1 tw="flex mx-auto text-md font-light mt-0">
               You made <span tw="mx-1 text-[#EAB308]">{commits}</span> commits
-              in the last 24 hrs
+              in the last 7 days
             </h1>
             <h1 tw="flex mx-auto font-semibold text-md mt-0 text-[#94A3B8]">
               LEVEL {levelParam}
